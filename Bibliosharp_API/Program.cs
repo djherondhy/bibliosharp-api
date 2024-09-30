@@ -20,6 +20,7 @@ builder.Services
     .AddDefaultTokenProviders();
 
 builder.Services.AddScoped<AdminService>();
+builder.Services.AddScoped<TokenService>();
 
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddControllers();

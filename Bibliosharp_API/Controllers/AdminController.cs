@@ -21,4 +21,19 @@ public class AdminController:ControllerBase {
         return Ok("Administrador Adicionado");
     }
 
+    [HttpPost("login")]
+    public async Task<IActionResult> Login(LoginAdminDto dto) {
+        var token = await _adminService.Login(dto, _adminService.GetTokenService());
+
+       
+        if (string.IsNullOrEmpty(token)) {
+            return BadRequest(new { message = "Login falhou, tente novamente." });
+        }
+
+       
+        return Ok(new {
+            message = "Login bem-sucedido!",
+            token = token
+        });
+    }
 }
