@@ -14,7 +14,10 @@ public class ClienteProfile: Profile {
           .ForMember(dest => dest.LivrosEmprestados, opt => opt.MapFrom(cliente => cliente.LivrosEmprestados.Select(emprestimo => new ReadLivroEmprestadoDto {
               Id = emprestimo.Livro.Id,
               Titulo = emprestimo.Livro.Titulo,
-              Autor = emprestimo.Livro.Autor
+              Autor = emprestimo.Livro.Autor,
+              DataDevolucao = (DateTime)emprestimo.DataDevolucao,
+              DataEmprestimo = (DateTime)emprestimo.DataEmprestimo,
+
           }).ToList()));
     }
 }

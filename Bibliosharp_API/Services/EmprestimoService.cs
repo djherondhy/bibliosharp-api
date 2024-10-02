@@ -18,12 +18,12 @@ public class EmprestimoService {
         }
 
         if (cliente.LivrosEmprestados.Count(e => e.DataDevolucao == null) >= 3) {
-            throw new Exception("O cliente já emprestou 3 livros.");
+            throw new ApplicationException("O cliente já emprestou 3 livros.");
         }
 
-        var livro = await _context.Livros.FirstOrDefaultAsync(l => l.Id == livroId && l.EstaEmprestado);
+        var livro = await _context.Livros.FirstOrDefaultAsync(l => l.Id == livroId && !l.EstaEmprestado);
         if (livro == null) {
-            throw new Exception("Livro não disponível.");
+            throw new ApplicationException("Livro não disponível.");
         }
 
         var emprestimo = new Emprestimo {
@@ -39,7 +39,7 @@ public class EmprestimoService {
         await _context.SaveChangesAsync();
 
         return true;
-
+             
     }
 
     public async Task<bool> DevolverLivroAsync(int clienteId, int livroId) {
