@@ -31,7 +31,7 @@ Esta é uma API desenvolvida em .NET para gerenciar uma biblioteca. A API oferec
 - Entity Framework Core
 - JWT Bearer para autenticação
 
-# Documentação da API de Biblioteca 📚
+## Documentação dos Endpoints API de Biblioteca 📚
 
 ## Endpoints de Admin 👨‍💼
 
