@@ -1,8 +1,11 @@
 using Bibliosharp_API.Data;
 using Bibliosharp_API.Models;
 using Bibliosharp_API.Services;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,7 +14,7 @@ var builder = WebApplication.CreateBuilder(args);
 var conn = builder.Configuration.GetConnectionString("BibliosharpConnection");
 
 builder.Services.AddDbContext<ApplicationDbContext>(opts => {
-    opts.UseMySql(conn, ServerVersion.AutoDetect(conn));
+    opts.UseLazyLoadingProxies().UseMySql(conn, ServerVersion.AutoDetect(conn));
 });
 
 builder.Services
@@ -21,9 +24,33 @@ builder.Services
 
 builder.Services.AddScoped<AdminService>();
 builder.Services.AddScoped<TokenService>();
+builder.Services.AddScoped<ClienteService>();
+builder.Services.AddScoped<LivroService>();
+builder.Services.AddScoped<EmprestimoService>();
 
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
-builder.Services.AddControllers();
+
+
+builder.Services.AddAuthentication(options => {
+    options.DefaultAuthenticateScheme =
+        JwtBearerDefaults.AuthenticationScheme;
+}).AddJwtBearer(options => {
+    options.TokenValidationParameters = new TokenValidationParameters {
+        ValidateIssuerSigningKey = true,
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("1278eydachjbcssdsdhb")),
+        ValidateAudience = false,
+        ValidateIssuer = false,
+        ClockSkew = TimeSpan.Zero
+    };
+});
+
+
+   
+builder.Services.AddControllers().AddNewtonsoftJson(options =>
+{
+    options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+});
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -39,6 +66,7 @@ if (app.Environment.IsDevelopment()) {
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
+app.UseAuthentication();
 
 app.MapControllers();
 

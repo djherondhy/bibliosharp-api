@@ -4,6 +4,7 @@ using Bibliosharp_API.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,16 +12,15 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Bibliosharp_API.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241002163942_Create Table Cliente e Livro")]
+    partial class CreateTableClienteeLivro
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "8.0.8")
-                .HasAnnotation("Proxies:ChangeTracking", false)
-                .HasAnnotation("Proxies:CheckEquality", false)
-                .HasAnnotation("Proxies:LazyLoading", true)
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
             MySqlModelBuilderExtensions.AutoIncrementColumns(modelBuilder);
@@ -117,35 +117,6 @@ namespace Bibliosharp_API.Migrations
                     b.ToTable("Clientes");
                 });
 
-            modelBuilder.Entity("Bibliosharp_API.Models.Emprestimo", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int?>("ClienteId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime?>("DataDevolucao")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<DateTime>("DataEmprestimo")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<int>("LivroId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ClienteId");
-
-                    b.HasIndex("LivroId");
-
-                    b.ToTable("Emprestimos");
-                });
-
             modelBuilder.Entity("Bibliosharp_API.Models.Livro", b =>
                 {
                     b.Property<int>("Id")
@@ -157,6 +128,9 @@ namespace Bibliosharp_API.Migrations
                     b.Property<string>("Autor")
                         .IsRequired()
                         .HasColumnType("longtext");
+
+                    b.Property<int?>("ClienteId")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("DataPublicacao")
                         .HasColumnType("datetime(6)");
@@ -173,6 +147,8 @@ namespace Bibliosharp_API.Migrations
                         .HasColumnType("longtext");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ClienteId");
 
                     b.ToTable("Livros");
                 });
@@ -309,21 +285,11 @@ namespace Bibliosharp_API.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("Bibliosharp_API.Models.Emprestimo", b =>
+            modelBuilder.Entity("Bibliosharp_API.Models.Livro", b =>
                 {
-                    b.HasOne("Bibliosharp_API.Models.Cliente", "Cliente")
+                    b.HasOne("Bibliosharp_API.Models.Cliente", null)
                         .WithMany("LivrosEmprestados")
                         .HasForeignKey("ClienteId");
-
-                    b.HasOne("Bibliosharp_API.Models.Livro", "Livro")
-                        .WithMany()
-                        .HasForeignKey("LivroId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Cliente");
-
-                    b.Navigation("Livro");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
