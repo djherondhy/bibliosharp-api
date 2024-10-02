@@ -1,4 +1,4 @@
-# Biblioteca API 📚
+# Bibliosharp API 📚
 
 Esta é uma API desenvolvida em .NET para gerenciar uma biblioteca. A API oferece funcionalidades para autenticação de usuários, gerenciamento de clientes e livros, além de permitir que os clientes emprestem e devolvam livros.
 
