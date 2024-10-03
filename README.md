@@ -35,62 +35,56 @@ Esta é uma API desenvolvida em .NET para gerenciar uma biblioteca. A API oferec
 
 ## Endpoints de Admin 👨‍💼
 
-### POST /Admin/register
+`POST /Admin/register`
 Adiciona um novo administrador ao sistema. 🆕
 
-### POST /Admin/login
+`POST /Admin/login`
 Realiza o login de um administrador. 🔑
 
----
 
 ## Endpoints de Cliente 🧑‍🎓
 
-### POST /Cliente
+`POST /Cliente`
 Adiciona um novo cliente ao sistema. 🆕
 
-### GET /Cliente
+`GET /Cliente`
 Obtém uma lista de todos os clientes. 📋
 
-### GET /Cliente/{id}
+`GET /Cliente/{id}`
 Obtém os detalhes de um cliente específico pelo ID. 🔍
 
-### PUT /Cliente/{id}
+`PUT /Cliente/{id}`
 Atualiza os dados de um cliente existente. ✏️
 
-### DELETE /Cliente/{id}
+`DELETE /Cliente/{id}`
 Remove um cliente existente pelo ID. ❌
 
----
 
 ## Endpoints de Empréstimo 📖
 
-### POST /Emprestimo/{clienteId}/emprestar/{livroId}
+`POST /Emprestimo/{clienteId}/emprestar/{livroId}`
 Empresta um livro para um cliente. 📅
 
-### POST /Emprestimo/devolver/{clienteId}/{livroId}
+`POST /Emprestimo/devolver/{clienteId}/{livroId}`
 Devolve um livro emprestado por um cliente. 🔄
 
----
 
 ## Endpoints de Livro 📚
 
-### POST /Livro
+`POST /Livro`
 Adiciona um novo livro ao sistema. 🆕
 
-### GET /Livro
+`GET /Livro`
 Obtém uma lista de todos os livros. 📋
 
-### GET /Livro/{id}
+`GET /Livro/{id}`
 Obtém os detalhes de um livro específico pelo ID. 🔍
 
-### PUT /Livro/{id}
+`PUT /Livro/{id}`
 Atualiza os dados de um livro existente. ✏️
 
-### DELETE /Livro/{id}
+`DELETE /Livro/{id}`
 Remove um livro existente pelo ID. ❌
 
-
-### POST /Emprestimo/devolver/{clienteId}/{livroId}
-Devolve um livro emprestado por um cliente.
 
 
